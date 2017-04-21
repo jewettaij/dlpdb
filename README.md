@@ -5,7 +5,7 @@ dlpdb
 
 A collection of tiny scripts to help automate the process of downloading and
 extracting coordinates, sequences, and secondary-structure information from
-a large number of PDB files.  (Details below.)
+a large number of PDB files.
 
 These scripts were originally used to extract coordinates and
 estimate force-field parameters for coarse grained models of biomolecules
