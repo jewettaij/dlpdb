@@ -1,0 +1,6 @@
+
+Warning: This example worked in 2012, but the names of the files have
+         changed since then.  Hopefully, even if these instructions are
+	 not quite correct, this still gives you an idea how to use the
+	 dlpdb scripts.  (The DNA example has been tested recently and works.)
+	 -Andrew 2017-4-21
