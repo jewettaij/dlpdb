@@ -13,6 +13,12 @@
 #          (The goal here was to just reduce the number of PDB files you have
 #            to check manually as much as possible.)
 #
+# I tested this procedure on 2017/4/20, and after following the instructions
+# below, the vast majority of the 4500 files were discarded. Only a few remained
+#119d.pdb  196d.pdb  1d49.pdb  1d98.pdb  1ikk.pdb  1wqz.pdb  1zf0.pdb  252d.pdb
+#158d.pdb  1d23.pdb  1d57.pdb  1hq7.pdb  1lp7.pdb  1zew.pdb  1zfc.pdb  5ju4.pdb
+# (... and 309d.pdb  3l1q.pdb if you include PDB files with overhangs.)
+#
 #   -----------------------
 #
 # Note: These commands assume you are using the bourne-shell.
@@ -27,10 +33,11 @@
 #
 # First, make sure the "dlpdb" tools are installed.  We will use them later:
 
-
-cd dlpdb/
-source README_install.sh
-cd ../
+git clone https://github.com/jewettaij/dlpdb dlpdb
+cd dlpdb
+virtualenv venv            # <-- optional
+source venv/bin/activate   # <-- optional
+pip install .
 
 #   -----------------------
 #
