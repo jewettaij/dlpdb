@@ -23,6 +23,7 @@ suitable shell environment has been installed.  See below.)
 There are two ways to install dlpdb:
 
 ## Installation using pip
+
 If you are familiar with pip, then run the following command from within the directory where this README file is located:
 
     pip install .

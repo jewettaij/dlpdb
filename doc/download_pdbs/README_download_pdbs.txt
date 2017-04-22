@@ -1,5 +1,5 @@
 ---
-   This file contains more details about how to use "dlpdb.py".
+   This file contains more details about how to use "download_pdbs.py".
 
 --- Overview ---
 When attempting to ask statistical questions about proteins, 
@@ -10,7 +10,7 @@ PDB files from the official rscb.org repository.
 
  Typical usage (example):
 
-    dlpdb.py < list_of_pdb_codes.txt
+    download_pdbs.py < list_of_pdb_codes.txt
 
  Where the input file contains a list of pdb-codes, one per line:
 100d
@@ -45,6 +45,7 @@ pdbs_most_recent.txt This is a list of PDB files (4-letter codes) which were
                      successfully downloaded the most recent time you ran
                      dlppdb.py.
 pdbs_old.txt        A list of PDB files which were downloaded in the current
-                    attempt using dlpdb.py, as well as all earlier attempts.
+                    attempt using download_pdbs.py, as well as all earlier
+                    attempts.
 
 If this script gets interrupted before completing, you can safely run it again.

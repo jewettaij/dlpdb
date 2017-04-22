@@ -1,2 +1,0 @@
-Warning, this code has not been tested recently and is not fully documented.
--Andrew 2012-10-24
