@@ -48,7 +48,6 @@ to contain the following lines:
 
     export PATH="$PATH:$HOME/dlpdb/dlpdb"
     export PATH="$PATH:$HOME/dlpdb/dlpdb/scripts"
-    export PATH="$PATH:$HOME/dlpdb/SSEARCH_ProtSci2010"
 
 ##  Documentation
 
