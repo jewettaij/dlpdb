@@ -2,27 +2,38 @@
 
 """
 Usage: 
-    merge_lines_periodic.py i1 i2 i3... \
+
+merge_lines_periodic.py i1 i2 i3... \
           [-p natoms_per_monomer] \
           [-s nskip] [-d delim_atom] [-D delim_monomer] \
           < crds_input.raw  \
           > multiple_atom_crds_per_line.dat
-Explanation: i1 i2 i3,... indices select the lines in each block (of atom
+
+Explanation: This script splits a text file into equally sized "blocks" 
+             (aka "monomers") and pastes the text text from different 
+             lines in each block into the same line (with optional delimeters).
+             The i1 i2 i3,... indices select the lines in each block (of atom
              coordinates in each monomer) that you want to merge together.
-             Indexing begins at 0, not 1.  (The first atom has i=0)
-          Negative numbers correspond to atoms in the previous block(monomer).
-          Numbers larger than natoms_per_monomer lie in the next block(monomer).
+             Indexing begins at 0, not 1.  (The first line in a block has i=0)
+         -Negative numbers correspond to atoms in the previous block(monomer).
+         -Numbers larger than natoms_per_monomer lie in the next block(monomer).
              If any of these indices lie out of range, then the entire list 
-             of lines is ignored.
-             If the -p argument is skipped, then "-p 1" is assumed, meaning that
-             the list of lines will be printed, with every line
-             The -s nskip argument allows you to skip over lines at the begining
+             of lines in this block is ignored.
+         -The -p argument indicates the number of lines in each block (aka "monomer")
+             If the -p argument is skipped, then it is assumed to be infinity. (In other
+             words, it is equal to the number of lines in the polymer conformation.)
+         -The -s nskip argument allows you to skip over lines at the begining
              of the file.  (NOTE: Comments and lines beginning with comments 
              are ignored already, so don't include them in the nskip argument.)
-             The -d and -D delimeters allow you to change the string which
-             separates text belonging to different atoms(lines), and different
-             monomers (blocks). By default, they are " " and "\\n", respectively
+         -The -d and -D delimeters allow you to change the string which 
+             separates text belonging to different atoms(lines), and different 
+             monomers (blocks). By default, they are " " and "\\n", respectively.
+         -Blank lines (if present) in the input file are interpreted as delimeters 
+             separating different "polymer conformations".  When encountered, each 
+             "polymer conformation" is processed separately, with the output for 
+             different polymer conformations delimted by blank lines.
 """
+
 
 import sys
 
@@ -31,8 +42,10 @@ g_module_name  = g_filename
 g_program_name = g_filename
 if g_filename.rfind('.py') != -1:
     g_module_name = g_filename[:g_filename.rfind('.py')]
-g_date_str     = '2016-3-17'
-g_version_str  = '0.2'
+g_date_str     = '2017-2-12'
+g_version_str  = '0.2.1'
+
+
 
 
 class InputError(Exception):
@@ -132,19 +145,22 @@ def SafelyEncodeString(in_str,
 
 
 def ProcessSnapshot(lines, 
-                    out_file,
+                    out_file, 
                     offsets, 
-                    period,
+                    period, 
                     nskip, 
                     delimeter_atom,
                     delimeter_monomer):
 
     offsets_min = min(offsets)
     offsets_max = max(offsets)
-    num_monomers = (len(lines)-nskip)/period
+    if period == 0:
+        num_monomers = 1
+    else:
+        num_monomers = (len(lines)-nskip)/period
     for I in range(0, num_monomers):
 
-        # If any of the entries will be missing, then ignore the who list
+        # If any of the entries will be missing, then ignore the whole list
         # of atoms (lines) for this monomer (block).
         if (I*period + offsets_min < nskip):
             continue
@@ -162,15 +178,17 @@ def ProcessSnapshot(lines,
                     out_file.write(delimeter_monomer)
 
 
-g_period = 1
-g_nskip = 0
-g_delimeter_atom = ' '
-g_delimeter_monomer = '\n'
-g_delimeter_snapshot = '\n'
-g_offsets = []
-
 
 def main():
+
+    g_period = 0
+    g_nskip = 0
+    g_delimeter_atom = ' '
+    g_delimeter_monomer = '\n'
+    g_delimeter_snapshot = '\n'
+    g_offsets = []
+
+    #######  Main Code Below: #######
 
     sys.stderr.write(g_program_name+' v'+g_version_str+' '+g_date_str+' ')
     if sys.version < '3':
@@ -299,6 +317,8 @@ def main():
         sys.exit(-1)
 
 
+
+
+
 if __name__ == "__main__":
     main()
-
