@@ -3,7 +3,7 @@ dlpdb
 
 ##  Description
 
-![distances_and_angles_from_DNA](./examples/dna_example/statistics_keeping_every_3rd_base_pair/dsDNA_3to1_C3p.svg)
+![distances_and_angles_from_DNA](./examples/dna_example/statistics_keeping_every_3rd_base_pair/dsDNA_3to1_C3p.png)
 
 A collection of tiny scripts to help automate the process of downloading and
 extracting coordinates, sequences, and secondary-structure information from
