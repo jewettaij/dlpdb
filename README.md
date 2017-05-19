@@ -3,13 +3,18 @@ dlpdb
 
 ##  Description
 
+![distances_and_angles_from_DNA](./examples/dna_example/statistics_keeping_every_3rd_base_pair/dsDNA_3to1_C3p.svg)
+
 A collection of tiny scripts to help automate the process of downloading and
 extracting coordinates, sequences, and secondary-structure information from
-a large number of PDB files.
+(a representative subset of) structures from the entire PDB library.
 
-These scripts were originally used to extract coordinates and
-estimate force-field parameters for coarse grained models of biomolecules
-(DNA and proteins).
+These scripts were originally used to estimate distances distances and angles
+between specific atoms in proteins and DNA.  
+The distribution of these distances and angles can be used to estimate
+force-field parameters for coarse grained models for these biomolecules.
+(Such as the DNA example shown above.)
+
 
 ## Requirements
 
