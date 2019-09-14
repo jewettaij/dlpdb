@@ -118,7 +118,7 @@ def main():
             coords = []
         else:
             # Each line should contain a list of 3 numbers separated by whitespace.
-            coords = map(float, line.split())
+            coords = list(map(float, line.split()))
             if len(coords) != 4*3:
                 sys.stderr.write('Error(coords2dihedrals):\n'+'Each line should either contain 12 numbers or be blank.\n')
                 sys.exit(-1)

@@ -61,7 +61,7 @@ def main():
             coords = []
         else:
             # Each line should contain a list of 3 numbers separated by whitespace.
-            coords = map(float, line.split())
+            coords = list(map(float, line.split()))
             if len(coords) != 2*3:
                 sys.stderr.write('Error(coords2distances.py):\n'+'Each line should either contain 6 numbers or be blank.\n')
                 sys.exit(-1)

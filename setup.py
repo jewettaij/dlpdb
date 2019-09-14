@@ -12,7 +12,15 @@ setup(
 
   author_email='jewett.aij@gmail.com',
 
+  author='Andrew Jewett',
+
+  author_email='jewett.aij@gmail.com',
+
   url='https://github.com/jewettaij/dlpdb',
+
+  download_url='https://github.com/jewettaij/dlpdb/archive/v0.2.0.zip',
+
+  version='0.2.0',
 
   # BSD 3-Clause License:
   # - http://choosealicense.com/licenses/bsd-3-clause
@@ -20,7 +28,7 @@ setup(
 
   license='BSD',
 
-  classifiers=['Development Status :: 2 - Pre-Alpha',
+  classifiers=['Development Status :: 4 - Beta',
                'License :: OSI Approved :: BSD License',
                'Environment :: Console',
                'Operating System :: MacOS :: MacOS X',

@@ -75,7 +75,7 @@ def main():
             coords = []
         else:
             # Each line should contain a list of 9 numbers separated by whitespace.
-            coords = map(float, line.split())
+            coords = list(map(float, line.split()))
             if len(coords) != 3*3:
                 sys.stderr.write('Error(coords2angles.py):\n'+'Each line should either contain 9 numbers or be blank.\n')
                 sys.exit(-1)

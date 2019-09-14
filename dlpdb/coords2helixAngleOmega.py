@@ -69,7 +69,7 @@ def main():
             xyz = []
         else:
             # Each line should contain a list of 3 numbers separated by whitespace.
-            xyz = map(float, line.split())
+            xyz = list(map(float, line.split()))
         r_i.append(xyz)
 
 
