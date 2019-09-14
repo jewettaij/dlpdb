@@ -8,13 +8,11 @@ setup(
 
   author='Andrew Jewett',
 
+  author_email='jewett.aij@gmail.com',
+
   description='collect statistics from the entire PDB library',
 
-  author_email='jewett.aij@gmail.com',
-
-  author='Andrew Jewett',
-
-  author_email='jewett.aij@gmail.com',
+  long_description='A collection of tiny scripts to help automate the process of downloading and extracting coordinates, sequences, and secondary-structure information from (a representative subset of) structures from the entire PDB library.  These scripts were originally used to estimate distances distances and angles between specific atoms in proteins and DNA.  The distribution of these distances and angles can be used to estimate force-field parameters for coarse grained models for these biomolecules.',
 
   url='https://github.com/jewettaij/dlpdb',
 
