@@ -33,7 +33,11 @@ import sys
 # Below we silently suppress the ugly "Broken pipe" message this generates:
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-from resid import *
+
+try:
+    from .resid import *
+except ImportError:
+    from resid import *
 
 
 def main():

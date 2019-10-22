@@ -35,7 +35,7 @@
 
 git clone https://github.com/jewettaij/dlpdb dlpdb
 cd dlpdb
-virtualenv venv            # <-- optional
+python -m venv venv            # <-- optional
 source venv/bin/activate   # <-- optional
 pip install .
 

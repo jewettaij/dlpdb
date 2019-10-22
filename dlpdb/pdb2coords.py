@@ -65,7 +65,11 @@ from math import sqrt
 # Below we silently suppress the ugly "Broken pipe" message this generates:
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-from resid import *
+
+try:
+    from .resid import *
+except ImportError:
+    from resid import *
 
 
 # Ignore atoms on the backbone (other than CA), 

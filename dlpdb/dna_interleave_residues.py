@@ -21,7 +21,11 @@ oriented in opposite directions.)
 import sys
 from operator import attrgetter
 from collections import defaultdict
-from resid import *
+
+try:
+    from .resid import *
+except ImportError:
+    from resid import *
 
 
 g_program_name = __file__.split('/')[-1]

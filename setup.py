@@ -16,23 +16,20 @@ setup(
 
   url='https://github.com/jewettaij/dlpdb',
 
-  download_url='https://github.com/jewettaij/dlpdb/archive/v0.2.0.zip',
+  download_url='https://github.com/jewettaij/dlpdb/archive/v0.2.1.zip',
 
-  version='0.2.0',
+  version='0.2.1',
 
-  # BSD 3-Clause License:
-  # - http://choosealicense.com/licenses/bsd-3-clause
-  # - http://opensource.org/licenses/BSD-3-Clause
-
-  license='BSD',
+  license='MIT',
 
   classifiers=['Development Status :: 4 - Beta',
-               'License :: OSI Approved :: BSD License',
+               'License :: OSI Approved :: MIT License',
                'Environment :: Console',
+               'Topic :: Scientific/Engineering :: Chemistry',
                'Operating System :: MacOS :: MacOS X',
                'Operating System :: POSIX :: Linux',
-               'Operating System :: Microsoft :: Windows'
-  ],
+               'Operating System :: Microsoft :: Windows',
+               'Intended Audience :: Science/Research'],
 
   scripts=['dlpdb/scripts/extract_angles.sh',
            'dlpdb/scripts/extract_dihedrals.sh',

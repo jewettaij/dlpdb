@@ -27,7 +27,11 @@
 
 import sys
 from operator import attrgetter
-from resid import *
+
+try:
+    from .resid import *
+except ImportError:
+    from resid import *
 
 
 # --- THE FOLLOWING FEATURES (interval restrictions) may be removed later:--
