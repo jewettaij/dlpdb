@@ -16,9 +16,9 @@ setup(
 
   url='https://github.com/jewettaij/dlpdb',
 
-  download_url='https://github.com/jewettaij/dlpdb/archive/v0.2.1.zip',
+  download_url='https://github.com/jewettaij/dlpdb/archive/v0.3.0.zip',
 
-  version='0.2.1',
+  version='0.3.0',
 
   license='MIT',
 
