@@ -224,15 +224,6 @@ awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/
  < distances_zigzag_minorgroove_C3p-C3p_trunc1-1.dat \
  > distances_zigzag_minorgroove_C3p-C3p_trunc1-1_ave_dev_n.dat
 
-awk '{for(i=1;i<=NF;++i){if ($i<=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
- < dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p.dat \
- > dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_ave_dev.dat
-awk '{for(i=1;i<=NF;++i){if ($i<=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
- < dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_trunc1-1.dat \
- > dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_trunc1-1_ave_dev.dat
-
-
-
 awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
  < angles_backbone_C3p-C3p-C3p.dat \
  > angles_backbone_C3p-C3p-C3p_ave_dev_n.dat
