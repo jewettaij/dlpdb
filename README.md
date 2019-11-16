@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/jewettaij/dlpdb.svg?branch=master)](./.travis.yml)
 [![GitHub](https://img.shields.io/github/license/jewettaij/dlpdb)](./LICENSE.md)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/dlpdb)](https://pypistats.org/packages/dlpdb)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jewettaij/dlpdb)]()
