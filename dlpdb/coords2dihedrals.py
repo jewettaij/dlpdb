@@ -74,7 +74,7 @@ def cross_prod_v3(a,b):
 
 def main():
 
-    branch_of_log = 2.0*pi  # by default, dihedral angles lie in range: [0, 360.0)
+    branch_of_log = pi  # by default, dihedral angles lie in range: [-180,180.0)
     truncate_a    = 0
     truncate_b    = 0
 
