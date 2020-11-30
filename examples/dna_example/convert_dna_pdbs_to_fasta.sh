@@ -20,7 +20,7 @@ for f in *.pdb; do
         echo "$PDB_CODE sequence too short ($LEN_SUM).  Discarding." >&2
         mv $f pdbs_too_short
     else
-        # Discard if more than 70% GC content
+        # Discard if more than 60% GC content
 	NUM_X=$(grep -o "x" <<< "$SEQ" | wc -l)
         NUM_G=$(grep -o "G" <<< "$SEQ" | wc -l)
         NUM_C=$(grep -o "C" <<< "$SEQ" | wc -l)

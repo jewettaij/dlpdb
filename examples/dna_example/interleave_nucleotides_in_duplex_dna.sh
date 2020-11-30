@@ -20,7 +20,12 @@ for f in *.pdb; do
     # (Note: You can also use: select_chains_with_dna.py *.pdb)
     dna_interleave_residues.py ${PDB_CODE}_1.pdb  ${PDB_CODE}_2.pdb \
        > pdbs_FINAL_USE_THESE_FOR_ANALYSIS/${PDB_CODE}_interleaved_12.pdb
-    # Swap chain order to increase sampling:
+    # Optional: Create a second PDB file with the order of the chains swapped.
+    # (Why? If you swap the order of the chains before interleaving the residues
+    #  then later, when you extract angles from atom positions in the resulting
+    #  interleaved double stranded DNA structure, the new angles will be
+    #  different.  ...But also valid.  Doing this effectively doubles the amount
+    #  of data you can collect from the orignal PDB files you started with.)
     dna_interleave_residues.py ${PDB_CODE}_2.pdb  ${PDB_CODE}_1.pdb \
        > pdbs_FINAL_USE_THESE_FOR_ANALYSIS/${PDB_CODE}_interleaved_21.pdb
     mv ${PDB_CODE}_?.pdb pdbs_FINAL_individual_chains/
