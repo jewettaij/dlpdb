@@ -1,3 +1,5 @@
+from math import sqrt, cos, sin, tan, acos, asin, atan, pi, floor
+
 def DotProd(va, vb):
     assert(len(va) == len(vb))
     result = 0.0
