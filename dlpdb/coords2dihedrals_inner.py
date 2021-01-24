@@ -41,100 +41,9 @@ Dihedral angles returned by this program will lie in the range:
 
 """
 
-import sys
-from math import sqrt, cos, sin, tan, acos, asin, atan, pi, floor
-# Sometimes this program pipes its output to other programs which halt early.
-# Below we silently suppress the ugly "Broken pipe" message this generates:
+import closest_points
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
-
-
-def length_v(r):
-    lsqd = 0.0
-    for d in range(0,len(r)):
-        lsqd += r[d]*r[d]
-    return sqrt(lsqd)
-
-
-def inner_prod_v(r1,r2):
-    result = 0.0
-    for d in range(0,len(r1)):
-        result += r1[d]*r2[d]
-    return result
-
-
-def cross_prod_v3(a,b):
-    c = [0.0,0.0,0.0]
-    c[0] = a[1]*b[2] - a[2]*b[1]
-    c[1] = a[2]*b[0] - a[0]*b[2]
-    c[2] = a[0]*b[1] - a[1]*b[0]
-    return c
-
-
-def Coords2DihedralsAnglesLengths(r0, r1, r2, r3, branch_of_log=pi)
-    r10 = [0.0, 0.0, 0.0]
-    r21 = [0.0, 0.0, 0.0]
-    r32 = [0.0, 0.0, 0.0]
-    for d in range(0,3):
-        r10[d] = r1[d] - r0[d]
-        r21[d] = r2[d] - r1[d]
-        r32[d] = r3[d] - r2[d]
-        coords_list[i][3*1+d] - coords_list[i][3*0+d]
-        r32[d] = coords_list[i][3*3+d] - coords_list[i][3*2+d]
-    l10 = length_v(r10)
-    l21 = length_v(r21)
-    l32 = length_v(r32)
-
-    n012 = cross_prod_v3(r10, r21)
-    n123 = cross_prod_v3(r21, r32)
-
-    # The dihedral-angle or 4-body angle is named "angle0124"
-    cos_phi = inner_prod_v(n012, n123) /(length_v(n012)*length_v(n123))
-
-    # There is a problem whenever 4 consecutive atoms are coplanar:
-    #
-    #            *---*
-    #                |      (all 4 atoms are coplanar, and phi = 0)
-    #            *---*
-    #
-    # In this example, the dihedral angle phi is well defined and =0.
-    # The problem is that, due to floating point roundoff
-    # "cos_phi" can sometimes slightly exceed 1.
-    # This causes a NAN when you calculate acos(cos_phi).
-
-    if (cos_phi > 1.0):
-        cos_phi = 1.0
-    elif (cos_phi < -1.0):
-        cos_phi = -1.0
-
-    phi = acos(cos_phi)
-
-    # This formula does not distinguish positive and negative phi.
-    #
-    # Negative dihedral angles:
-    #
-    # Check if  the position of atom i+3 is above the phi=0 plane
-    # (in the region of positive phi), or below the phi=0 plane.
-    # It is above the phi=0 plane if the bond from atom i+2 to i+3
-    # points in the same direction as the negative-phi-tangent-vector 
-    # for atom i (not i+3)  (...which points in the n012 direction)
-    if inner_prod_v(n012, r32) < 0.0:
-        phi = -phi
-
-    phi_range_a = branch_of_log - (2.0*pi)
-    phi_range_b = branch_of_log
-    nphi = floor((phi - phi_range_a) / (2.0*pi))
-    phi = phi - (nphi*2.0*pi)
-
-    theta0 = length_v(n012) / (l10*l21)
-    theta1 = length_v(n123) / (l21*l32)
-    return (phi, theta0, theta1, l10, l21, l32)
-
-
-
-def Coords2Dihedrals(r0, r1, r2, r3):
-    phi,,,,, = Coords2DihedralsAnglesLengths(r0, r1, r2, r3)
-    return phi
 
 
 
@@ -170,8 +79,8 @@ def main():
         branch_of_log = float(sys.argv[1])
         branch_of_log *= pi/180.0
 
-    coords_list = []
 
+    coords_list = []
     # Read the file
     for line in sys.stdin:
         line = line.strip()
@@ -189,6 +98,7 @@ def main():
                 sys.stderr.write('Error(coords2dihedrals):\n'+'Each line should either contain 12 numbers or be blank.\n')
                 sys.exit(-1)
         coords_list.append(coords)
+
 
     # Truncate the data we don't want.
     # (Why?  The residues at the beginning and ending of helices 
@@ -210,6 +120,14 @@ def main():
             r3 = [coords_list[i][3*3+0],
                   coords_list[i][3*3+1],
                   coords_list[i][3*3+2]]
+            r10 = [r1[0]-r0[0],
+                   r1[1]-r0[1],
+                   r1[2]-r0[2]]
+            r32 = [r3[0]-r2[0],
+                   r3[1]-r2[1],
+                   r3[2]-r2[2]]
+
+            R1, R2 = ClosestPoints(r0, r2, r10, r32)
 
             phi,theta0,theta1,l10,l21,l32 = Coords2DihedralsAnglesLengths(r0,
                                                                           r1,
@@ -218,8 +136,6 @@ def main():
                                                                           branch_of_log)
 
             sys.stdout.write(str(phi*180.0/pi) + ' ' +
-                             str(theta0*180.0/pi) + ' ' +
-                             str(theta1*180.0/pi) + ' ' +
                              str(l10) + ' ' +
                              str(l21) + ' ' +
                              str(l32) +
