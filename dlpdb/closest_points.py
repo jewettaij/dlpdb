@@ -45,31 +45,27 @@ def PrintVect(v):
 
 def ClosestPoints(ra0, rb0, va, vb):
     """
-    Return the closest pair of points along two lines of infinite length
-    passing through different points and in different directions.
-    For example:
-    va=[1.0,0.0,0.0]
-    vb=[1.0,1.0,1.0]
-    ra0=[0.0,0.0,0.0]
-    rb0=[0.0,0.0,1.0]
-    I use "bra" "ket" notation to denote the vectors for each point.
-    The two points are denoted |ra> and |rb>.
-    |ra> is a point on a line along the direction |va> passing through |ra0>.
-    |rb> is a point on a line along the direction |vb> passing through |rb0>.
-    The formula for the closest pair of points, |ra> and |rb>, is:
-    |ra> = |ra0> + ta |va>
-    |rb> = |rb0> + tb |vb>
-    Where:
-    ta = (vb^2 <va| - <va|vb> <vb|) (|rb0> - |ra0>) / (va^2 vb^2 - <va|vb>^2)
-    tb = (va^2 <vb| - <va|vb> <va|) (|ra0> - |rb0>) / (va^2 vb^2 - <va|vb>^2)
-    Notation used:
-    1) The notation <V|W> denotes the dot product between vectors |V> and |W>
-    2) Similarly, notation like: (<va| + <vb|) (|ra0> - |rb>) denotes the
-       dot product between vector sum (<va| + <vb|) and the sum (|ra0> - |rb0>)
-       (and also equals <va|ra0> + <vb|ra0> - <va|rb0> - <vb|rb0>)
-    3) va^2 is shorthand for the squared length of vector va (=<va|va>)
+    Return the closest pair of points in 3D along two lines of infinite length
+    pointing in directions va,vb and passing through points ra0,rb0.
     """
     assert(len(ra0) == len(rb0) == len(va) == len(vb))
+    # Derivation:
+    # I use "bra" "ket" notation to denote the vectors for each point.
+    # The two points are denoted |ra> and |rb>.
+    # |ra> is a point on a line along the direction |va> passing through |ra0>.
+    # |rb> is a point on a line along the direction |vb> passing through |rb0>.
+    # The formula for the closest pair of points, |ra> and |rb>, is:
+    # |ra> = |ra0> + ta |va>
+    # |rb> = |rb0> + tb |vb>
+    # Where:
+    # ta = (vb^2 <va| - <va|vb> <vb|) (|rb0> - |ra0>) / (va^2 vb^2 - <va|vb>^2)
+    # tb = (va^2 <vb| - <va|vb> <va|) (|ra0> - |rb0>) / (va^2 vb^2 - <va|vb>^2)
+    # Notation used:
+    # 1) The notation <V|W> denotes the dot product between vectors |V> and |W>
+    # 2) Similarly, notation like: (<va| + <vb|) (|ra0> - |rb>) denotes the
+    #   dot product between vector sum (<va| + <vb|) and the sum (|ra0> - |rb0>)
+    #   (and also equals <va|ra0> + <vb|ra0> - <va|rb0> - <vb|rb0>)
+    # 3) va^2 is shorthand for the squared length of vector va (=<va|va>)
     rab = SubtractVect(ra0, rb0)  # = |ra> - |rb>
     va2 = DotProd(va,va)
     vb2 = DotProd(vb,vb)
