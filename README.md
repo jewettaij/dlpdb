@@ -1,6 +1,6 @@
 [![GitHub](https://img.shields.io/github/license/jewettaij/dlpdb)](./LICENSE.md)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/dlpdb)](https://pypistats.org/packages/dlpdb)
-[![PyPI - Version](https://img.shields.io/pypi/v/superpose3d)](https://pypi.org/project/superpose3d/)
+[![PyPI - Version](https://img.shields.io/pypi/v/dlpdb)](https://pypi.org/project/dlpdb/)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jewettaij/dlpdb)]()
 
 
