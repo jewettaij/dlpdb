@@ -6,13 +6,13 @@ from .resid import ResID
 from .closest_line_points import ClosestLinePoints
 from .coords2angles import Coords2AnglesLengths, Coords2Angles
 from .coords2dihedrals import Coords2DihedralsAnglesLengths, Coords2Dihedrals
-from .coords2dihedrals_inner import Coords2DihedralsInnerLengths, Coords2DihedralsInner
+from .coords2projected_dihedrals import Coords2ProjectedDihedralsLengths, Coords2ProjectedDihedrals
 from .helixAngleOmega import CalcOmegaFromThetaPhi, CalcOmega
 
 # I no longer remember why I import "main" from the executable scripts.
 # Perhaps these next few lines are unnecessary, but they seem to do no harm:
 from .coords2angles import main
-from .coords2dihedrals_inner import main
+from .coords2projected_dihedrals import main
 from .coords2dihedrals import main
 from .coords2distances import main
 from .coords2helixAngleOmega import main
@@ -44,7 +44,7 @@ from .truncate_tokens import main
 
 __all__ = ['closest_points',
            'coords2angles',
-           'coords2dihedrals_inner',
+           'coords2projected_dihedrals',
            'coords2dihedrals',
            'coords2distances',
            'coords2helixAngleOmega',
