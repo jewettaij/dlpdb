@@ -155,6 +155,8 @@ def main():
                                                                           branch_of_log)
 
             sys.stdout.write(str(phi*180.0/pi) + ' ' +
+                             str(theta0*180.0/pi) + ' ' +
+                             str(theta1*180.0/pi) + ' ' +
                              str(l10) + ' ' +
                              str(l21) + ' ' +
                              str(l32) +

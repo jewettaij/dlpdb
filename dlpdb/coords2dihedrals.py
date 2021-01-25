@@ -125,12 +125,21 @@ def Coords2DihedralsAnglesLengths(r0, r1, r2, r3, branch_of_log=pi):
     nphi = floor((phi - phi_range_a) / (2.0*pi))
     phi = phi - (nphi*2.0*pi)
 
-    theta0 = asin(length_v(n012) / (l10*l21))
+
+    sin_theta0 = length_v(n012) / (l10*l21)
+    if sin_theta0 > 1.0:
+        sin_theta0 = 1.0
+    theta0 = asin(sin_theta0)
     if r21[0]*r10[0]+r21[1]*r10[1]+r21[2]*r10[2] > 0.0:
         theta0 = pi - theta0
-    theta1 = asin(length_v(n123) / (l21*l32))
-    if r32[0]*r210]+r32[1]*r21[1]+r32[2]*r21[2] > 0.0:
+
+    sin_theta1 = length_v(n123) / (l21*l32)
+    if sin_theta1 > 1.0:
+        sin_theta1 = 1.0
+    theta1 = asin(sin_theta1)
+    if r32[0]*r21[0]+r32[1]*r21[1]+r32[2]*r21[2] > 0.0:
         theta1 = pi - theta1
+
     return (phi, theta0, theta1, l10, l21, l32)
 
 
