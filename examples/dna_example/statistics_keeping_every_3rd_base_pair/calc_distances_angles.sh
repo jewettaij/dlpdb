@@ -120,6 +120,19 @@ ls -f1 *_12.pdb | extract_dihedrals.sh 180 "\"[0::2]\" \" C3'\" i-6 \" C3'\" i-5
 ls -f1 *_12.pdb | extract_dihedrals.sh 180 "\"[0::2]\" \" C3'\" i+6 \" C3'\" i+7 \" C3'\" i+1 \" C3'\"" >> dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_raw.dat
 
 
+# Optional new addition (2021-1-24): "Projected Dihedrals"
+# These are the torsion angles between successive bases.
+# The script that calculates these angles also reports
+# the distance between successive bases.
+# Together this information can be used to estimate
+# the average helical twist per monomer, as well as
+# the average distance per monomer.
+# (Here 1 "monomer" equals 3 base pairs.)
+
+ls -f1 *_12.pdb | extract_projected_dihedrals.sh 180 "\"[0::2]\" \" C3'\" i+1 \" C3'\" i+7 \" C3'\" i+6 \" C3'\"" > projected_dihedrals_C3p-C3p-C3p-C3p_raw.dat
+ls -f1 *_12.pdb | extract_line_separation.sh 180 "\"[0::2]\" \" C3'\" i+1 \" C3'\" i+7 \" C3'\" i+6 \" C3'\"" > line_separation_C3p-C3p-C3p-C3p_raw.dat
+
+
 #   Now put all the numbers on separate lines, and throw away
 #   impossible values (large or negative distances or angles)
 awk '{for (i=1;i<=NF;i++){if ($i>=0.0) print $i}}' < distances_basepairs_C3p-C3p_raw.dat > distances_basepairs_C3p-C3p.dat
@@ -138,6 +151,10 @@ awk '{for (i=1;i<=NF;i++){if ($i>=-360) print $i}}' < dihedrals_basepairs_C3p-C3
 awk '{for (i=1;i<=NF;i++){if ($i>=-360) print $i}}' < dihedrals_zigzag_majorgroove_C3p-C3p-C3p-C3p_raw.dat > dihedrals_zigzag_majorgroove_C3p-C3p-C3p-C3p.dat
 awk '{for (i=1;i<=NF;i++){if ($i>=-360) print $i}}' < dihedrals_zigzag_minorgroove_C3p-C3p-C3p-C3p_raw.dat > dihedrals_zigzag_minorgroove_C3p-C3p-C3p-C3p.dat
 awk '{for (i=1;i<=NF;i++){if ($i>=-360) print $i}}' < dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_raw.dat > dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p.dat
+
+
+awk '{for (i=1;i<=NF;i++){if ($i>=-360) print $i}}' < projected_dihedrals_C3p-C3p-C3p-C3p_raw.dat > projected_dihedrals_C3p-C3p-C3p-C3p.dat
+awk '{for (i=1;i<=NF;i++){if ($i>=0.0) print $i}}' < line_separation_C3p-C3p-C3p-C3p_raw.dat > line_separation_C3p-C3p-C3p-C3p.dat
 
 
 # Some nucleotides at the very start and the end of a helix are
@@ -186,6 +203,10 @@ awk '{for (i=1;i<=NF;i++){if ($i >=-360) printf "%g ",$i} printf "\n"}' < dihedr
 
 awk '{for (i=1;i<=NF;i++){if ($i >=-360) printf "%g ",$i} printf "\n"}' < dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_raw.dat | truncate_tokens.py 1 1 | awk '{ for (i=1;i<=NF;i++){print $i}}' > dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_trunc1-1.dat
 
+
+
+awk '{for (i=1;i<=NF;i++){if ($i >=-360) printf "%g ",$i} printf "\n"}' < projected_dihedrals_C3p-C3p-C3p-C3p_raw.dat | truncate_tokens.py 1 1 | awk '{ for (i=1;i<=NF;i++){print $i}}' > projected_dihedrals_C3p-C3p-C3p-C3p_trunc1-1.dat
+awk '{for (i=1;i<=NF;i++){if ($i >=0.0) printf "%g ",$i} printf "\n"}' < line_separation_C3p-C3p-C3p-C3p_raw.dat | truncate_tokens.py 1 1 | awk '{ for (i=1;i<=NF;i++){print $i}}' > line_separation_C3p-C3p-C3p-C3p_trunc1-1.dat
 
 
 
@@ -292,3 +313,18 @@ awk '{for(i=1;i<=NF;++i){if ($i<=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/
  < dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_trunc1-1.dat \
  > dihedrals_zigzag_torsion_C3p-C3p-C3p-C3p_trunc1-1_ave_dev_n.dat
 
+
+
+awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
+ < projected_dihedrals_C3p-C3p-C3p-C3p.dat \
+ > projected_dihedrals_C3p-C3p-C3p-C3p_ave_dev_n.dat
+awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
+ < projected_dihedrals_C3p-C3p-C3p-C3p_trunc1-1.dat \
+ > projected_dihedrals_C3p-C3p-C3p-C3p_trunc1-1_ave_dev_n.dat
+
+awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
+ < line_separation_C3p-C3p-C3p-C3p.dat \
+ > line_separation_C3p-C3p-C3p-C3p_ave_dev_n.dat
+awk '{for(i=1;i<=NF;++i){if ($i>=0.0){sum+=$i;sumsq+=$i*$i;n++}}} END{print sum/n " " sqrt((sumsq/n - (sum/n)*(sum/n))*(n/(n-1))) " " n}' \
+ < line_separation_C3p-C3p-C3p-C3p_trunc1-1.dat \
+ > line_separation_C3p-C3p-C3p-C3p_trunc1-1_ave_dev_n.dat

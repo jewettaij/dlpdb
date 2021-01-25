@@ -34,6 +34,7 @@ setup(
   scripts=['dlpdb/scripts/extract_angles.sh',
            'dlpdb/scripts/extract_dihedrals.sh',
            'dlpdb/scripts/extract_projected_dihedrals.sh',
+           'dlpdb/scripts/extract_line_separation.sh',
            'dlpdb/scripts/extract_distances.sh',
            'dlpdb/scripts/extract_helix_angles.sh',
            'dlpdb/scripts/extract_helix_dihedrals.sh',
