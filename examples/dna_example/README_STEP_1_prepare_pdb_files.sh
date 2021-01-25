@@ -35,7 +35,7 @@
 
 git clone https://github.com/jewettaij/dlpdb dlpdb
 cd dlpdb
-python -m venv venv            # <-- optional
+python -m venv venv        # <-- optional
 source venv/bin/activate   # <-- optional
 pip install .
 
@@ -68,10 +68,10 @@ pip install .
 # Then download all of the corresponding PDB files using this command:
 
 
-dlpdb.py  < pdbs_with_2_DNA_chains.txt
+download_pdbs.py  < pdbs_with_2_DNA_chains.txt
 
-# dlpdb.py downloads many PDB files in compressed format and uncompresses them.
-# Now delete all of the compressed files.
+# download_pdbs.py downloads many PDB files in compressed format and uncompresses
+# them.  Now delete all of the compressed files.
 
 rm -f ????.pdb.gz
 
@@ -232,7 +232,7 @@ cd ..
 
 #   -----------------------
 #
-# Optional: Remove the temporary files created by dlpdb.py
+# Optional: Remove the temporary files created by download_pdbs.py
 
 rm -f pdbs_old.txt pdbs_most_recent.txt
 

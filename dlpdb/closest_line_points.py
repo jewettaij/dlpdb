@@ -47,7 +47,7 @@ def PrintVect(v):
     sys.stdout.write('\n')
 
 
-def ClosestPoints(ra0, rb0, va, vb):
+def ClosestLinePoints(ra0, rb0, va, vb):
     """
     Return the closest pair of points in 3D along two lines of infinite length
     pointing in directions va,vb and passing through points ra0,rb0.

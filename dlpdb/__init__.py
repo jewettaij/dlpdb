@@ -3,10 +3,11 @@
 # Hence, only a few of the modules contain useful functions that can be
 # accessed from within python.  They are below:
 from .resid import ResID
-from .closest_points import ClosestPoints
+from .closest_line_points import ClosestLinePoints
 from .coords2angles import Coords2AnglesLengths, Coords2Angles
 from .coords2dihedrals import Coords2DihedralsAnglesLengths, Coords2Dihedrals
-from .coords2dihedrals_inner import Coords2DihedralsLengthsInner, Coords2DihedralsInner
+from .coords2dihedrals_inner import Coords2DihedralsInnerLengths, Coords2DihedralsInner
+from .helixAngleOmega import CalcOmegaFromThetaPhi, CalcOmega
 
 # I no longer remember why I import "main" from the executable scripts.
 # Perhaps these next few lines are unnecessary, but they seem to do no harm:
@@ -14,7 +15,8 @@ from .coords2angles import main
 from .coords2dihedrals_inner import main
 from .coords2dihedrals import main
 from .coords2distances import main
-from .coords2helixAngleOmega.py import main
+from .coords2helixAngleOmega import main
+from .dlpdbfile import main
 from .dlpisces import main
 from .dna_interleave_residues import main
 from .download_pdbs import main
@@ -26,7 +28,6 @@ from .has_rna_heavy_atoms import main
 from .has_secondary_str import main
 from .has_sheets import main
 from .has_turns import main
-from .helixAngleOmega import main
 from .merge_lines_periodic import main
 from .pdb2coords_ave import main
 from .pdb2coords import main
@@ -46,7 +47,7 @@ __all__ = ['closest_points',
            'coords2dihedrals_inner',
            'coords2dihedrals',
            'coords2distances',
-           'coords2helixAngleOmega.py',
+           'coords2helixAngleOmega',
            'dlpisces',
            'dna_interleave_residues',
            'download_pdbs',

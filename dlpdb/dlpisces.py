@@ -49,11 +49,11 @@ in a new PDB file like 7odc_chainA.pdb
 
 # author: Andrew Jewett
 g_program_name = __file__.split('/')[-1]
-g_date_str = '2017-4-21'
-g_version_str = '0.5.1'
+g_date_str = '2021-1-24'
+g_version_str = '0.6.0'
 
 
-import sys, urllib2, random, time, gzip
+import sys, urllib, urllib.request, random, time, gzip
 
 
 def FileExists(fname):
@@ -91,9 +91,8 @@ def DownloadFileTo(url, file_name, verbose_mode = True):
     #   in_file = urllib.urlopen(url)
     # But the web site may return garbage if the file doesn't exist.
     # Instead, we check for errors first:
-    request = urllib2.Request(url)
-    try: in_file = urllib2.urlopen(request)
-    except urllib2.URLError, e:
+    try: in_file = urllib.request.urlopen(url)
+    except urllib.error.URLError as e:
         if (verbose_mode):
             sys.stderr.write(str(e)+'\n')
             sys.stderr.write('   omitting file \"'+file_name+'\"\n')
@@ -110,6 +109,7 @@ def DownloadFileTo(url, file_name, verbose_mode = True):
 # This version infers the file name from the URL.
 def DownloadFile(url, verbose_mode = True):
     DownloadFileTo(url, ExtractFileName(url), verbose_mode)
+
 
 
 
@@ -140,7 +140,7 @@ def main():
     #     sys.stdin
     # ii) are in the current list, but are not downloaded yet 
     #     (new pdb files)
-    pdbs_current_file = open('pdbs_most_recent.txt', 'wb')
+    pdbs_current_file = open('pdbs_most_recent.txt', 'w')
     pdbs_current = set([]) #entire list of pdb codes requested
     pdbs_new  = set([]) #a list of new pdb codes requested that were not in the old list
     pdbs_old_file = open('pdbs_old.txt', 'a')
@@ -181,9 +181,9 @@ def main():
 
                 #Unzip the pdb file
                 with gzip.open(file_name, 'rb') as f:
-                    file_content = f.read(f)
+                    file_content = f.read()
                     f.close()
-                f = open(pdb_code+'.pdb', 'wb'):
+                f = open(pdb_code+'.pdb', 'wb')
                 f.write(file_content)
                 if not FileExists(pdb_code+'.pdb'):
                     sys.stderr.write('Error: A problem occured when trying to download PDB code \"'+pdb_code+'\"\n'

@@ -61,11 +61,11 @@ Dihedral angles returned by this program will lie in the range:
 import sys
 from math import sqrt, cos, sin, tan, acos, asin, atan, pi, floor
 try:
-    from .closest_points import ClosestPoints
+    from .closest_line_points import ClosestLinePoints
     from .coords2dihedrals import Coords2DihedralsAnglesLengths,Coords2Dihedrals
 except (ImportError, SystemError, ValueError):
     # not installed as a package
-    from closest_points import ClosestPoints
+    from closest_line_points import ClosestLinePoints
     from coords2dihedrals import Coords2DihedralsAnglesLengths,Coords2Dihedrals
 
 
