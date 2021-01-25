@@ -72,6 +72,7 @@ def cross_prod_v3(a,b):
     return c
 
 
+
 def Coords2DihedralsAnglesLengths(r0, r1, r2, r3, branch_of_log=pi):
     r10 = [0.0, 0.0, 0.0]
     r21 = [0.0, 0.0, 0.0]
@@ -144,8 +145,9 @@ def Coords2DihedralsAnglesLengths(r0, r1, r2, r3, branch_of_log=pi):
 
 
 
-def Coords2Dihedrals(r0, r1, r2, r3):
-    phi,th1,th2,l01,l21,l32 = Coords2DihedralsAnglesLengths(r0, r1, r2, r3)
+def Coords2Dihedrals(r0, r1, r2, r3, branch_of_log=pi):
+    phi,th1,th2,l01,l21,l32 = Coords2DihedralsAnglesLengths(r0, r1, r2, r3,
+                                                            branch_of_log)
     return phi
 
 

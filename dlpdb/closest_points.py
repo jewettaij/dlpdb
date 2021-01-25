@@ -1,3 +1,4 @@
+import sys
 from math import sqrt, cos, sin, tan, acos, asin, atan, pi, floor
 
 def DotProd(va, vb):
@@ -37,6 +38,7 @@ def CrossProd3(a,b):
     c[2] = a[0]*b[1] - a[1]*b[0]
     return c
 
+
 def PrintVect(v):
     for d in range(0, len(v)):
         sys.stdout.write(str(v[d]))
@@ -73,6 +75,15 @@ def ClosestPoints(ra0, rb0, va, vb):
     vb2 = DotProd(vb,vb)
     va_vb = DotProd(va, vb)
     descr = va2*vb2 - va_vb*va_vb
+    if descr == 0.0:
+        # Then the lines are parallel.
+        # In that case, try to pick a point along each line
+        # which lies half-way in between ra0 and rb0
+        scaleb = 0.5*DotProd(rab, vb) / vb2
+        deltab = ScaleVect(scaleb, vb)
+        rb = AddVect(rb0, deltab)
+        ra = SubtractVect(ra0, deltab)
+        return (ra, rb)
     ta = -DotProd(SubtractVect(ScaleVect(vb2,va),ScaleVect(va_vb,vb)),rab)/descr
     tb =  DotProd(SubtractVect(ScaleVect(va2,vb),ScaleVect(va_vb,va)),rab)/descr
     ra = AddVect(ra0, ScaleVect(ta, va))

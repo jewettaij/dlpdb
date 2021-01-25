@@ -45,6 +45,34 @@ def inner_prod_v(r1,r2):
     return result
 
 
+
+
+def Coords2AnglesLengths(r0, r1, r2):
+    r10 = [r1[0]-r0[0], r1[1]-r0[1], r1[2]-r0[2]]
+    r21 = [r2[0]-r1[0], r2[1]-r1[1], r2[2]-r1[2]]
+
+    l10 = length_v(r10)
+    l21 = length_v(r21)
+
+    # The bond angle is the angle between r10 and r21
+    cos_theta = -inner_prod_v(r10, r21) / (l10 * l21)
+
+    if (cos_theta > 1.0):
+        cos_theta = 1.0
+    elif (cos_theta < -1.0):
+        cos_theta = -1.0
+
+    theta = acos(cos_theta)
+
+
+
+
+def Coords2Angles(r0, r1, r2):
+    theta, l10, l21 = Coords2AnglesLengths(r0, r1, r2)
+    return theta
+
+
+
 def main():
     if (len(sys.argv) > 3):
         sys.stderr.write('Error (coords2angles): number of arguments should not exceed 2.\n'\
@@ -90,23 +118,17 @@ def main():
     N = len(coords_list)
     for i in range(0,N):
         if len(coords_list[i]) == 3*3:
-            r10 = [0.0, 0.0, 0.0]
-            r21 = [0.0, 0.0, 0.0]
-            for d in range(0,3):
-                r10[d] = coords_list[i][3*1+d] - coords_list[i][3*0+d]
-                r21[d] = coords_list[i][3*2+d] - coords_list[i][3*1+d]
-            l10 = length_v(r10)
-            l21 = length_v(r21)
+            r0 = [coords_list[i][3*0+0],
+                  coords_list[i][3*0+1],
+                  coords_list[i][3*0+2]]
+            r1 = [coords_list[i][3*1+0],
+                  coords_list[i][3*1+1],
+                  coords_list[i][3*1+2]]
+            r2 = [coords_list[i][3*2+0],
+                  coords_list[i][3*2+1],
+                  coords_list[i][3*2+2]]
 
-            # The bond angle is the angle between r10 and r21
-            cos_theta = -inner_prod_v(r10, r21) /(length_v(r10)*length_v(r21))
-
-            if (cos_theta > 1.0):
-                cos_theta = 1.0
-            elif (cos_theta < -1.0):
-                cos_theta = -1.0
-
-            theta = acos(cos_theta)
+            theta, l10, l21 = Coords2AnglesLengths(r0, r1, r2)
 
             sys.stdout.write(str(theta*180.0/pi)+" "+str(l10)+" "+str(l21)+'\n')
 

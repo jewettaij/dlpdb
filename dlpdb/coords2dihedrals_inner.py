@@ -9,13 +9,14 @@ This script reads a 12-column numeric text file representing the positions
 of 4 atoms.  Then it calculates the "inner dihedral", which I define
 as the difference in direction between two infinitely long lines:
 -The first line passes through the first two atoms,
--The other line ("last line") line passes through the last two atoms.
+-The other line (the "last line") passes through the last two atoms.
 The "inner dihedral" angle can be thought of as the largest possible
 apparent angle between these two lines when viewed from all possible
 viewing directions.  A pair of points (one on each line) is determined
 that are closest to each other.  The "inner dihedral" angle is the angle
 one sees when viewing these two lines from direction of the axis connecting
-these two closest points.
+these two closest points. Note: If these two lines are parallel to each other
+or if these 4 points are coplanar, the "inner" dihedral angle is undefined.
 
 Example input file:
 
@@ -59,10 +60,50 @@ Dihedral angles returned by this program will lie in the range:
 
 import sys
 from math import sqrt, cos, sin, tan, acos, asin, atan, pi, floor
-from closest_points import ClosestPoints
-from coords2dihedrals import Coords2DihedralsAnglesLengths, Coords2Dihedrals
+try:
+    from .closest_points import ClosestPoints
+    from .coords2dihedrals import Coords2DihedralsAnglesLengths,Coords2Dihedrals
+except (ImportError, SystemError, ValueError):
+    # not installed as a package
+    from closest_points import ClosestPoints
+    from coords2dihedrals import Coords2DihedralsAnglesLengths,Coords2Dihedrals
+
+
 import signal
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
+
+
+def Coords2DihedralsInnerLengths(r0, r1, r2, r3, branch_of_log=pi):
+    """
+    Calculate the "inner" dihedral angle from the position of 4 atoms.  I
+    define this as the difference in direction between two infinitely long lines
+    -The first line passes through the first two atoms (r0,r1).
+    -The other line (the "last line") passes through the last two atoms (r2,r3).
+    The "inner dihedral" angle can be thought of as the largest possible
+    apparent angle between these two lines when viewed from all possible
+    viewing directions.  A pair of points (one on each line) is determined
+    that are closest to each other.  The "inner dihedral" angle is the angle
+    one sees when viewing these two lines from direction of the axis connecting
+    these two closest points.  If these 4 points are coplanar, the 
+    "inner" dihedral angle between them is undefined.
+    """
+    R1, R2 = ClosestPoints(r0, r2, r10, r32)
+
+    phi,theta0,theta1,l10,l21,l32 = Coords2DihedralsAnglesLengths(r0,
+                                                                  R1,
+                                                                  R2,
+                                                                  r3,
+                                                                  branch_of_log)
+    # (Note: theta0 and theta1 should both be approximately pi/2,
+    #        so we don't bother to report these angles to the caller.)
+    return (phi, l10, l21, l32)
+
+
+
+def Coords2DihedralsInner(r0, r1, r2, r3, branch_of_log=pi):
+    phi,l01,l21,l32 = Coords2DihedralsInnerLengths(r0, r1, r2, r3)
+    return phi
 
 
 
@@ -145,14 +186,6 @@ def main():
             r32 = [r3[0]-r2[0],
                    r3[1]-r2[1],
                    r3[2]-r2[2]]
-
-            R1, R2 = ClosestPoints(r0, r2, r10, r32)
-
-            phi,theta0,theta1,l10,l21,l32 = Coords2DihedralsAnglesLengths(r0,
-                                                                          R1,
-                                                                          R2,
-                                                                          r3,
-                                                                          branch_of_log)
 
             sys.stdout.write(str(phi*180.0/pi) + ' ' +
                              str(theta0*180.0/pi) + ' ' +
