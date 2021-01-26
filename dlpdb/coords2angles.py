@@ -61,8 +61,8 @@ def Coords2AnglesLengths(r0, r1, r2):
         cos_theta = 1.0
     elif (cos_theta < -1.0):
         cos_theta = -1.0
-
     theta = acos(cos_theta)
+    return (theta, l10, l21)
 
 
 
